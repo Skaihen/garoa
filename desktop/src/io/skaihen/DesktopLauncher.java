@@ -17,12 +17,12 @@ public class DesktopLauncher {
 		config.setWindowListener(new Lwjgl3WindowAdapter() {
 			@Override
 			public void focusLost() {
-				Gdx.graphics.setForegroundFPS(60);
+				Gdx.graphics.setForegroundFPS(10);
 			}
 
 			@Override
 			public void focusGained() {
-				Gdx.graphics.setForegroundFPS(10);
+				Gdx.graphics.setForegroundFPS(60);
 			}
 		});
 		config.useVsync(true);
