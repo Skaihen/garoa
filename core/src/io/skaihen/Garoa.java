@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
@@ -39,7 +40,7 @@ public class Garoa extends ApplicationAdapter {
 
 		ModelBuilder modelBuilder = new ModelBuilder();
 		model = modelBuilder.createBox(5f, 5f, 5f,
-				new Material()),
+				new Material(new Texture(Gdx.files.internal("plep.png"))),
 				Usage.Position | Usage.Normal);
 
 		for (int x = -10; x <= 10; x += 5) {
