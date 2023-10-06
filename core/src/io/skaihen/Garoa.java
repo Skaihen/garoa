@@ -20,15 +20,15 @@ import com.badlogic.gdx.utils.Array;
 import io.skaihen.Player.Camera;
 
 public class Garoa extends ApplicationAdapter {
-	public Environment environment;
+	private Environment environment;
 
-	public PerspectiveCamera perspectiveCamera;
-	public CameraInputController cameraController;
+	private PerspectiveCamera perspectiveCamera;
+	private CameraInputController cameraController;
 
-	public Model model;
-	public ModelBatch modelBatch;
+	private Model model;
+	private ModelBatch modelBatch;
 
-	public Array<ModelInstance> instances = new Array<ModelInstance>();
+	private final Array<ModelInstance> instances = new Array<>();
 
 	@Override
 	public void create() {
