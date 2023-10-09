@@ -1,17 +1,16 @@
-package io.skaihen.Player;
+package io.skaihen.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 
 public class Camera {
-    private static PerspectiveCamera perspectiveCamera;
-    private static CameraInputController cameraController;
-
     private Camera() {
     }
 
     public static void setup() {
+        PerspectiveCamera perspectiveCamera;
+        CameraInputController cameraController;
 
         perspectiveCamera = new PerspectiveCamera(90, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         perspectiveCamera.position.set(7f, 7f, 7f);
@@ -23,5 +22,4 @@ public class Camera {
         cameraController = new CameraInputController(perspectiveCamera);
         Gdx.input.setInputProcessor(cameraController);
     }
-
 }
