@@ -1,49 +1,35 @@
-sourceCompatibility = 1.8
+apply plugin: "application"
+
+sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
-sourceSets.main.resources.srcDirs = ["../assets"]
 
-project.ext.mainClassName = "io.skaihen.DesktopLauncher"
-project.ext.assetsDir = new File("../assets")
+mainClassName = "io.skaihen.desktop.DesktopLauncher"
+project.ext.assetsDir = new File("$projectDir/../assets");
 
-import org.gradle.internal.os.OperatingSystem
+sourceSets.main.resources.srcDirs = [project.ext.assetsDir.getAbsolutePath()]
 
-tasks.register('run', JavaExec) {
-    dependsOn classes
-    mainClass = project.mainClassName
+task launchDesktop(dependsOn: classes, type: JavaExec) {
+    main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
     workingDir = project.assetsDir
     ignoreExitValue = true
+}
 
-    if (OperatingSystem.current() == OperatingSystem.MAC_OS) {
-        // Required to run on macOS
-        jvmArgs += "-XstartOnFirstThread"
+eclipse {
+    project {
+        name = appName + "-desktop"
+        linkedResource name: 'assets', type: '2', location: 'PARENT-1-PROJECT_LOC/assets'
     }
 }
 
-tasks.register('debug', JavaExec) {
-    dependsOn classes
-    mainClass = project.mainClassName
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = project.assetsDir
-    ignoreExitValue = true
-    debug = true
+task afterEclipseImport(description: "Post processing after project generation", group: "IDE") {
+  doLast {
+    def classpath = new XmlParser().parse(file(".classpath"))
+    new Node(classpath, "classpathentry", [ kind: 'src', path: 'assets' ]);
+    def writer = new FileWriter(file(".classpath"))
+    def printer = new XmlNodePrinter(new PrintWriter(writer))
+    printer.setPreserveWhitespace(true)
+    printer.print(classpath)
+  }
 }
-
-tasks.register('dist', Jar) {
-    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-    manifest {
-        attributes 'Main-Class': project.mainClassName
-    }
-    dependsOn configurations.runtimeClasspath
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    with jar
-}
-
-
-dist.dependsOn classes
-
-eclipse.project.name = appName + "-desktop"
