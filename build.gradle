@@ -1,5 +1,4 @@
 buildscript {
-    
 
     repositories {
         mavenLocal()
@@ -9,8 +8,6 @@ buildscript {
         google()
     }
     dependencies {
-        
-
     }
 }
 
@@ -42,21 +39,19 @@ allprojects {
 project(":desktop") {
     apply plugin: "java-library"
 
-
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        
+
     }
 }
 
 project(":core") {
     apply plugin: "java-library"
-
-
+    
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+
     }
 }
