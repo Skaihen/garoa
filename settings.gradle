@@ -1,2 +1,1 @@
-include 'core', 'desktop'
-rootProject.name = 'Garoa'
+include 'desktop', 'core'
