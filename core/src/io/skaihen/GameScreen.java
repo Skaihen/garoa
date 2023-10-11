@@ -21,14 +21,14 @@ public class GameScreen implements Screen {
 
         plepImg = new Texture("plep.jpg");
 
-        camera = new OrthographicCamera(game.getWidthScreen(), game.getHeightScreen());
+        camera = new OrthographicCamera();
         camera.setToOrtho(false, game.getWidthScreen(), game.getHeightScreen());
 
         plep = new Rectangle();
         plep.x = (float) game.getWidthScreen() / 2 - 64f / 2;
         plep.y = 20f;
 
-        plep.width = 64f;
+        plep.width = 128f;
         plep.height = 64f;
     }
 
@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Keys.D)) plep.x += (int) (200 * Gdx.graphics.getDeltaTime());
 
         if (plep.x < 0) plep.x = 0;
-        if (plep.x > game.getWidthScreen() - 64f) plep.x = game.getWidthScreen() - 64f;
+        if (plep.x > game.getWidthScreen() - plep.width) plep.x = game.getWidthScreen() - plep.width;
     }
 
     @Override
