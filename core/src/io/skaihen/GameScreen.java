@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 public class GameScreen implements Screen {
@@ -15,6 +17,7 @@ public class GameScreen implements Screen {
     private final OrthographicCamera camera;
     private final Texture plepImg;
     private final Rectangle plep;
+    private final Viewport viewport;
 
     public GameScreen(final Garoa game) {
         this.game = game;
@@ -22,19 +25,20 @@ public class GameScreen implements Screen {
         plepImg = new Texture("plep.jpg");
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, game.getWidthScreen(), game.getHeightScreen());
+        camera.setToOrtho(false, 800, 480);
+        viewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
         plep = new Rectangle();
         plep.x = (float) game.getWidthScreen() / 2 - 64f / 2;
         plep.y = 20f;
 
-        plep.width = 128f;
+        plep.width = 32f;
         plep.height = 64f;
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(1, 1, 1, 1);
+        ScreenUtils.clear(0, 0, 0, 1);
 
         camera.update();
 
@@ -58,6 +62,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        viewport.update(width, height);
     }
 
     @Override
