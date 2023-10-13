@@ -25,7 +25,7 @@ public class GameScreen implements Screen {
         plepImg = new Texture("plep.jpg");
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, 640, 480);
         viewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
         plep = new Rectangle();
