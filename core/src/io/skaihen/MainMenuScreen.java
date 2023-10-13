@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MainMenuScreen implements Screen {
@@ -17,7 +17,7 @@ public class MainMenuScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 640, 480);
-        viewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        viewport = new ScreenViewport(camera);
     }
 
     @Override
@@ -28,8 +28,8 @@ public class MainMenuScreen implements Screen {
         game.getBatch().setProjectionMatrix(camera.combined);
 
         game.getBatch().begin();
-        game.getFont().draw(game.getBatch(), "Welcome to Plep!!! ", 100, 150);
-        game.getFont().draw(game.getBatch(), "Tap anywhere to begin!", 100, 100);
+        game.getFont().draw(game.getBatch(), "Welcome to Plep!!! ", 0, 50);
+        game.getFont().draw(game.getBatch(), "Tap anywhere to begin!", 0, 0);
         game.getBatch().end();
 
         if (Gdx.input.isTouched()) {
