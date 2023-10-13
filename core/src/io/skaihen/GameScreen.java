@@ -54,8 +54,13 @@ public class GameScreen implements Screen {
             camera.unproject(touchPos);
             plep.x = touchPos.x - plep.width / 2;
         }
-        if (Gdx.input.isKeyPressed(Keys.A)) plep.x -= (int) (200 * Gdx.graphics.getDeltaTime());
-        if (Gdx.input.isKeyPressed(Keys.D)) plep.x += (int) (200 * Gdx.graphics.getDeltaTime());
+
+        int speed = Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) ? 6 : 3;
+
+        if (Gdx.input.isKeyPressed(Keys.A)) plep.x -= speed;
+        if (Gdx.input.isKeyPressed(Keys.D)) plep.x += speed;
+        if (Gdx.input.isKeyPressed(Keys.W)) plep.y += speed;
+        if (Gdx.input.isKeyPressed(Keys.S)) plep.y -= speed;
 
         if (plep.x < 0) plep.x = 0;
         if (plep.x > game.getWidthScreen() - plep.width) plep.x = game.getWidthScreen() - plep.width;

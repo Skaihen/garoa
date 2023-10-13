@@ -28,8 +28,8 @@ public class MainMenuScreen implements Screen {
         game.getBatch().setProjectionMatrix(camera.combined);
 
         game.getBatch().begin();
-        game.getFont().draw(game.getBatch(), "Welcome to Plep!!! ", 0, 50);
-        game.getFont().draw(game.getBatch(), "Tap anywhere to begin!", 0, 0);
+        game.getFont().draw(game.getBatch(), "Welcome to Plep!!! ", 100, 150);
+        game.getFont().draw(game.getBatch(), "Tap anywhere to begin!", 100, 100);
         game.getBatch().end();
 
         if (Gdx.input.isTouched()) {
