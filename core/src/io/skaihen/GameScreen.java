@@ -29,11 +29,12 @@ public class GameScreen implements Screen {
         viewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
         plep = new Rectangle();
-        plep.x = (float) game.getWidthScreen() / 2 - 64f / 2;
-        plep.y = 20f;
 
         plep.width = 32f;
         plep.height = 64f;
+
+        plep.x = (float) game.getWidthScreen() / 2 - plep.width / 2;
+        plep.y = 20f;
     }
 
     @Override
@@ -51,7 +52,7 @@ public class GameScreen implements Screen {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
-            plep.x = touchPos.x - 64f / 2;
+            plep.x = touchPos.x - plep.width / 2;
         }
         if (Gdx.input.isKeyPressed(Keys.A)) plep.x -= (int) (200 * Gdx.graphics.getDeltaTime());
         if (Gdx.input.isKeyPressed(Keys.D)) plep.x += (int) (200 * Gdx.graphics.getDeltaTime());
