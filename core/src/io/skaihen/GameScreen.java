@@ -17,7 +17,7 @@ public class GameScreen implements Screen {
     private final OrthographicCamera camera;
     private final Texture plepImg;
     private final Rectangle plep;
-    private final Viewport viewport;
+    private final Viewport extendedViewport;
 
     public GameScreen(final Garoa game) {
         this.game = game;
@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 640, 480);
-        viewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        extendedViewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
         plep = new Rectangle();
 
@@ -63,7 +63,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        extendedViewport.update(width, height);
     }
 
     @Override

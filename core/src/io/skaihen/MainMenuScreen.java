@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MainMenuScreen implements Screen {
     final Garoa game;
-    private final Viewport viewport;
+    private final Viewport screenViewport;
     OrthographicCamera camera;
 
     public MainMenuScreen(final Garoa game) {
@@ -17,7 +17,7 @@ public class MainMenuScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 640, 480);
-        viewport = new ScreenViewport(camera);
+        screenViewport = new ScreenViewport(camera);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        screenViewport.update(width, height);
     }
 
     @Override
