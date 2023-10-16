@@ -55,6 +55,6 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.draw(background, 0, 0, nil, 4)
+    gameMap:draw()
     player.anim:draw(player.spriteSheet, player.x, player.y, nil, 4)
 end
