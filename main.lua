@@ -19,7 +19,7 @@ function love.load()
     player.spriteSheet = love.graphics.newImage("assets/sprites/player-sheet.png")
     player.grid = anim8.newGrid(12, 18, player.spriteSheet:getWidth(), player.spriteSheet:getHeight())
 
-    world:add(player, player.x, player.y, 12, 18)
+    world:add(player, player.x, player.y, 14, 19)
 
     player.animations = {}
     player.animations.down = anim8.newAnimation(player.grid("1-4", 1), 0.2)
@@ -33,28 +33,31 @@ end
 function love.update(dt)
     local isMoving = false
 
-    local dx, dy = 0, 0
+    local goalX, goalY = player.x, player.y
 
     if love.keyboard.isDown("s") then
-        player.y = player.y + player.speed
+        goalY = player.y + player.speed
         player.anim = player.animations.down
         isMoving = true
     end
     if love.keyboard.isDown("a") then
-        player.x = player.x - player.speed
+        goalX = player.x - player.speed
         player.anim = player.animations.left
         isMoving = true
     end
     if love.keyboard.isDown("d") then
-        player.x = player.x + player.speed
+        goalX = player.x + player.speed
         player.anim = player.animations.right
         isMoving = true
     end
     if love.keyboard.isDown("w") then
-        player.y = player.y - player.speed
+        goalY = player.y - player.speed
         player.anim = player.animations.up
         isMoving = true
     end
+
+    local actualX, actualY = world:move(player, goalX, goalY)
+    player.x, player.y = actualX, actualY
 
     if isMoving == false then
         player.anim:gotoFrame(2)
