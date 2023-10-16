@@ -10,7 +10,7 @@ return {
   tilewidth = 64,
   tileheight = 64,
   nextlayerid = 4,
-  nextobjectid = 12,
+  nextobjectid = 31,
   properties = {},
   tilesets = {
     {
@@ -159,35 +159,7 @@ return {
       properties = {
         ["collidable"] = true
       },
-      objects = {
-        {
-          id = 8,
-          name = "",
-          type = "",
-          shape = "polygon",
-          x = 575.75,
-          y = 320.5,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 0, y = -24.75 },
-            { x = -48.25, y = -24.5 },
-            { x = -48.25, y = -169.5 },
-            { x = 111.75, y = -169 },
-            { x = 112.25, y = -24.5 },
-            { x = 64, y = -25 },
-            { x = 64.5, y = -1 },
-            { x = 127.5, y = -0.5 },
-            { x = 128.5, y = -193.25 },
-            { x = -63.75, y = -192.25 },
-            { x = -63.75, y = -1.5 }
-          },
-          properties = {}
-        }
-      }
+      objects = {}
     }
   }
 }
