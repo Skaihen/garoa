@@ -1,63 +1,16 @@
-local bump = require 'libraries/bump'
-
-if love.getVersion == nil or love.getVersion() < 11 then
-    local origSetColor = love.graphics.setColor
-    love.graphics.setColor = function(r, g, b, a)
-        return origSetColor(
-                math.floor(r * 256),
-                math.floor(g * 256),
-                math.floor(b * 256),
-                a ~= nil and math.floor(a * 256) or nil
-        )
-    end
-end
-
-local instructions = [[
-  bump.lua simple demo
-
-    arrows: move
-    tab: toggle debug info
-    delete: run garbage collector
-]]
-
-local cols_len = 0 -- how many collisions are happening
-
--- World creation
+local bump = require("libraries/bump")
 local world = bump.newWorld()
 
-world = bump.newWorld()
+local camera = require("libraries/camera")
+local cam = camera()
 
-sti = require("libraries/sti")
-gameMap = sti("assets/maps/testMap.lua", { "bump" })
+local anim8 = require("libraries/anim8")
+love.graphics.setDefaultFilter("nearest", "nearest")
+
+local sti = require("libraries/sti")
+local gameMap = sti("assets/maps/testMap.lua", { "bump" })
 gameMap:bump_init(world)
 
-
--- Message/debug functions
-local function drawMessage()
-    local msg = instructions:format(tostring(shouldDrawDebug))
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.print(msg, 550, 10)
-end
-
-local consoleBuffer = {}
-local consoleBufferSize = 15
-for i = 1, consoleBufferSize do
-    consoleBuffer[i] = ""
-end
-local function consolePrint(msg)
-    table.remove(consoleBuffer, 1)
-    consoleBuffer[consoleBufferSize] = msg
-end
-
-local function drawConsole()
-    local str = table.concat(consoleBuffer, "\n")
-    for i = 1, consoleBufferSize do
-        love.graphics.setColor(1, 1, 1, i / consoleBufferSize)
-        love.graphics.printf(consoleBuffer[i], 10, 580 - (consoleBufferSize - i) * 12, 790, "left")
-    end
-end
-
--- helper function
 local function drawBox(box, r, g, b)
     love.graphics.setColor(r, g, b, 0.25)
     love.graphics.rectangle("fill", box.x, box.y, box.w, box.h)
@@ -65,10 +18,15 @@ local function drawBox(box, r, g, b)
     love.graphics.rectangle("line", box.x, box.y, box.w, box.h)
 end
 
-
-
--- Player functions
-local player = { x = 50, y = 50, w = 20, h = 20, speed = 200 }
+local player = {
+    x = 400,
+    y = 350,
+    width = 12,
+    height = 18,
+    speed = 200,
+    spriteSheet = love.graphics.newImage("assets/sprites/player-sheet.png"),
+    grid = anim8.newGrid(width, height, spriteSheet:getWidth(), spriteSheet:getHeight())
+}
 
 local function updatePlayer(dt)
     local speed = player.speed
@@ -95,74 +53,82 @@ local function updatePlayer(dt)
     end
 end
 
-local function drawPlayer()
-    drawBox(player, 0, 1, 0)
-end
-
--- Block functions
-
-local blocks = {}
-
-local function addBlock(x, y, w, h)
-    local block = { x = x, y = y, w = w, h = h }
-    blocks[#blocks + 1] = block
-    world:add(block, x, y, w, h)
-end
-
-local function drawBlocks()
-    for _, block in ipairs(blocks) do
-        drawBox(block, 1, 0, 0)
-    end
-end
-
-
-
-
--- Main LÖVE functions
-
 function love.load()
-    world:add(player, player.x, player.y, player.w, player.h)
+    world:add(player, player.x, player.y, 12, 18)
 
-    addBlock(0, 0, 800, 32)
-    addBlock(0, 32, 32, 600 - 32 * 2)
-    addBlock(800 - 32, 32, 32, 600 - 32 * 2)
-    addBlock(0, 600 - 32, 800, 32)
+    player.animations = {}
+    player.animations.down = anim8.newAnimation(player.grid("1-4", 1), 0.2)
+    player.animations.left = anim8.newAnimation(player.grid("1-4", 2), 0.2)
+    player.animations.right = anim8.newAnimation(player.grid("1-4", 3), 0.2)
+    player.animations.up = anim8.newAnimation(player.grid("1-4", 4), 0.2)
 
-    for i = 1, 30 do
-        addBlock(math.random(100, 600),
-                math.random(100, 400),
-                math.random(10, 100),
-                math.random(10, 100)
-        )
-    end
+    player.anim = player.animations.down
 end
 
 function love.update(dt)
-    cols_len = 0
-    updatePlayer(dt)
+    local isMoving = false
+
+    local goalX, goalY = player.x, player.y
+
+    if love.keyboard.isDown("s") then
+        goalY = player.y + player.speed
+        player.anim = player.animations.down
+        isMoving = true
+    end
+    if love.keyboard.isDown("a") then
+        goalX = player.x - player.speed
+        player.anim = player.animations.left
+        isMoving = true
+    end
+    if love.keyboard.isDown("d") then
+        goalX = player.x + player.speed
+        player.anim = player.animations.right
+        isMoving = true
+    end
+    if love.keyboard.isDown("w") then
+        goalY = player.y - player.speed
+        player.anim = player.animations.up
+        isMoving = true
+    end
+
+    local actualX, actualY = world:move(player, goalX, goalY, slide)
+    player.x, player.y = actualX, actualY
+
+    if isMoving == false then
+        player.anim:gotoFrame(2)
+    end
+
+    player.anim:update(dt)
+
+    cam:lookAt(player.x, player.y)
+
+    local w = love.graphics.getWidth()
+    local h = love.graphics.getHeight()
+
+    if cam.x < w / 2 then
+        cam.x = w / 2
+    end
+
+    if cam.y < h / 2 then
+        cam.y = h / 2
+    end
+
+    local mapW = gameMap.width * gameMap.tilewidth
+    local mapH = gameMap.height * gameMap.tileheight
+
+    if cam.x > (mapW - w / 2) then
+        cam.x = (mapW - w / 2)
+    end
+    if cam.y > (mapH - h / 2) then
+        cam.y = (mapH - h / 2)
+    end
+
 end
 
 function love.draw()
+    cam:attach()
     gameMap:drawLayer(gameMap.layers["Ground"])
     gameMap:drawLayer(gameMap.layers["Trees"])
-    drawBlocks()
-    drawPlayer()
-    if shouldDrawDebug then
-        drawDebug()
-        drawConsole()
-    end
-    drawMessage()
-end
-
--- Non-player keypresses
-function love.keypressed(k)
-    if k == "escape" then
-        love.event.quit()
-    end
-    if k == "tab" then
-        shouldDrawDebug = not shouldDrawDebug
-    end
-    if k == "delete" then
-        collectgarbage("collect")
-    end
+    player.anim:draw(player.spriteSheet, player.x, player.y, nil, 4, nil, 6, 9)
+    cam:detach()
 end
