@@ -16,7 +16,31 @@ return {
     {
       name = "test-tiles",
       firstgid = 1,
-      filename = "test-tiles.tsx"
+      class = "",
+      tilewidth = 64,
+      tileheight = 64,
+      spacing = 0,
+      margin = 0,
+      columns = 9,
+      image = "tileset.png",
+      imagewidth = 576,
+      imageheight = 384,
+      objectalignment = "unspecified",
+      tilerendersize = "tile",
+      fillmode = "stretch",
+      tileoffset = {
+        x = 0,
+        y = 0
+      },
+      grid = {
+        orientation = "orthogonal",
+        width = 64,
+        height = 64
+      },
+      properties = {},
+      wangsets = {},
+      tilecount = 54,
+      tiles = {}
     }
   },
   layers = {

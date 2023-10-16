@@ -3,11 +3,11 @@ function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
 
     sti = require("libraries/sti")
-    gameMap = sti("maps/testMap.lua")
+    gameMap = sti("assets/maps/testMap.lua")
 
     player = {}
     player.x = 400
-    player.y = 200
+    player.y = 350
     player.speed = 3
     player.spriteSheet = love.graphics.newImage("assets/sprites/player-sheet.png")
     player.grid = anim8.newGrid(12, 18, player.spriteSheet:getWidth(), player.spriteSheet:getHeight())
@@ -19,8 +19,6 @@ function love.load()
     player.animations.up = anim8.newAnimation(player.grid("1-4", 4), 0.2)
 
     player.anim = player.animations.down
-
-    background = love.graphics.newImage("assets/maps/test.png")
 end
 
 function love.update(dt)
