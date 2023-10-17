@@ -11,7 +11,6 @@ PLAYER_MOVEMENT_SPEED = 5
 
 
 class Garoa(arcade.Window):
-
     def __init__(self, width, height, title, vsync):
         super().__init__(width, height, title, vsync)
 
