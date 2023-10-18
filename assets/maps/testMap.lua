@@ -10,7 +10,7 @@ return {
   tilewidth = 64,
   tileheight = 64,
   nextlayerid = 4,
-  nextobjectid = 31,
+  nextobjectid = 34,
   properties = {},
   tilesets = {
     {
@@ -148,7 +148,7 @@ return {
       type = "objectgroup",
       draworder = "topdown",
       id = 3,
-      name = "Collitions",
+      name = "Collisions",
       class = "",
       visible = true,
       opacity = 1,
@@ -159,7 +159,21 @@ return {
       properties = {
         ["collidable"] = true
       },
-      objects = {}
+      objects = {
+        {
+          id = 33,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 512,
+          y = 192,
+          width = 128,
+          height = 128,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
     }
   }
 }
