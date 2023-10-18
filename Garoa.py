@@ -1,13 +1,20 @@
 import arcade
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 650
+SCREEN_WIDTH = 400
+SCREEN_HEIGHT = 350
 SCREEN_TITLE = "Garoa"
 
 CHARACTER_SCALING = 1
-TILE_SCALING = 2
+TILE_SCALING = 0.5
 
 PLAYER_MOVEMENT_SPEED = 5
+
+PLAYER_START_X = 90 * CHARACTER_SCALING
+PLAYER_START_Y = 800 * CHARACTER_SCALING
+
+LAYER_NAME_GROUND = "Ground"
+LAYER_NAME_TREES = "Trees"
+LAYER_NAME_COLLISIONS = "Collisions"
 
 
 class Garoa(arcade.Window):
@@ -28,23 +35,24 @@ class Garoa(arcade.Window):
         self.gui_camera = arcade.Camera(self.width, self.height)
 
         layer_options = {
-            "Collisions": {
-              "use_spatial_hash": True,
-            },
+            # LAYER_NAME_COLLISIONS: {
+            #     "use_spatial_hash": True
+            # },
         }
-        self.tile_map = arcade.load_tilemap("assets/maps/testMap.json", TILE_SCALING, layer_options)
+        self.tile_map = arcade.TileMap("assets/maps/testMap.json", TILE_SCALING, layer_options)
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
+        self.scene.add_sprite_list_after("Player", LAYER_NAME_TREES)
         self.player_sprite = arcade.Sprite("assets/sprites/player-sheet.png", CHARACTER_SCALING)
-        self.player_sprite.center_x = 12 * CHARACTER_SCALING
-        self.player_sprite.center_y = 18 * CHARACTER_SCALING
+        self.player_sprite.center_x = PLAYER_START_X
+        self.player_sprite.center_y = PLAYER_START_Y
         self.scene.add_sprite("Player", self.player_sprite)
 
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
 
         self.physics_engine = arcade.PhysicsEngineSimple(
-            self.player_sprite, self.scene["Collisions"]
+            self.player_sprite, self.scene["Trees"]
         )
 
     def on_draw(self):
@@ -53,11 +61,11 @@ class Garoa(arcade.Window):
         self.scene.draw(pixelated=True)
         self.gui_camera.use()
 
-        score_text = "Interfaz"
+        score_text = f"Interfaz {self.player_sprite.center_y + (self.camera.viewport_height / 2)}"
         arcade.draw_text(
             score_text,
             10,
-            self.height-20,
+            self.height - 20,
             arcade.csscolor.WHITE,
             18,
         )
@@ -84,15 +92,14 @@ class Garoa(arcade.Window):
 
     def center_camera_to_player(self):
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
-        screen_center_y = self.player_sprite.center_y - (
-                self.camera.viewport_height / 2
-        )
+        screen_center_y = self.player_sprite.center_y - (self.camera.viewport_height / 2)
 
-        # Don't let camera travel past 0
         if screen_center_x < 0:
             screen_center_x = 0
         if screen_center_y < 0:
             screen_center_y = 0
+        if (screen_center_y + self.height / 2) > 900:
+            screen_center_y = 900 - self.height / 2
         player_centered = screen_center_x, screen_center_y
 
         self.camera.move_to(player_centered)
