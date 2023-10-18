@@ -56,8 +56,8 @@ class Garoa(arcade.Window):
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
 
-        self.physics_engine = arcade.PhysicsEnginePlatformer(
-            self.player_sprite, platforms=self.scene[LAYER_NAME_COLLISIONS], gravity_constant=0
+        self.physics_engine = arcade.PhysicsEngineSimple(
+            self.player_sprite, self.scene[LAYER_NAME_COLLISIONS]
         )
 
     def on_draw(self):
@@ -111,7 +111,6 @@ class Garoa(arcade.Window):
 
     def on_update(self, delta_time):
         self.physics_engine.update()
-        self.scene.update([LAYER_NAME_COLLISIONS])
         self.center_camera_to_player()
 
 
