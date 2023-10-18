@@ -4,8 +4,8 @@ SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 350
 SCREEN_TITLE = "Garoa"
 
-CHARACTER_SCALING = 1
 TILE_SCALING = 0.5
+CHARACTER_SCALING = TILE_SCALING * 2
 SPRITE_PIXEL_SIZE = 64
 GRID_PIXEL_SIZE = SPRITE_PIXEL_SIZE * TILE_SCALING
 
@@ -14,9 +14,9 @@ PLAYER_MOVEMENT_SPEED = 5
 PLAYER_START_X = 90 * CHARACTER_SCALING
 PLAYER_START_Y = 800 * CHARACTER_SCALING
 
-LAYER_NAME_GROUND = "Ground"
-LAYER_NAME_TREES = "Trees"
-LAYER_NAME_COLLISIONS = "Collisions"
+BACKGROUND_LAYER = "Background"
+TREES_LAYER = "Trees"
+ITEMS_LAYER = "Items"
 
 
 class Garoa(arcade.Window):
@@ -38,26 +38,25 @@ class Garoa(arcade.Window):
         self.gui_camera = arcade.Camera(self.width, self.height)
 
         layer_options = {
-            LAYER_NAME_COLLISIONS: {
+            ITEMS_LAYER: {
                 "use_spatial_hash": True
             }
         }
         self.tile_map = arcade.TileMap("assets/maps/testMap.json", TILE_SCALING, layer_options)
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
-        self.scene.add_sprite_list_after("Player", LAYER_NAME_TREES)
+        self.scene.add_sprite_list_after("Player", TREES_LAYER)
         self.player_sprite = arcade.Sprite("assets/sprites/player-sheet.png", CHARACTER_SCALING)
         self.player_sprite.center_x = PLAYER_START_X
         self.player_sprite.center_y = PLAYER_START_Y
         self.scene.add_sprite("Player", self.player_sprite)
 
         self.map_height = self.tile_map.height * GRID_PIXEL_SIZE
-
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
 
         self.physics_engine = arcade.PhysicsEngineSimple(
-            self.player_sprite, self.scene[LAYER_NAME_COLLISIONS]
+            self.player_sprite, self.scene[ITEMS_LAYER]
         )
 
     def on_draw(self):
