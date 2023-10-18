@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="34">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="7" nextobjectid="34">
  <editorsettings>
-  <export target="testMap.lua" format="lua"/>
+  <export target="testMap.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="test-tiles" tilewidth="64" tileheight="64" tilecount="54" columns="9">
   <image source="tileset.png" width="576" height="384"/>

@@ -6,6 +6,8 @@ SCREEN_TITLE = "Garoa"
 
 CHARACTER_SCALING = 1
 TILE_SCALING = 0.5
+SPRITE_PIXEL_SIZE = 64
+GRID_PIXEL_SIZE = SPRITE_PIXEL_SIZE * TILE_SCALING
 
 PLAYER_MOVEMENT_SPEED = 5
 
@@ -22,6 +24,7 @@ class Garoa(arcade.Window):
         super().__init__(width, height, title, vsync)
 
         self.tile_map = None
+        self.map_height = 0
         self.scene = None
         self.player_sprite = None
         self.physics_engine = None
@@ -35,9 +38,9 @@ class Garoa(arcade.Window):
         self.gui_camera = arcade.Camera(self.width, self.height)
 
         layer_options = {
-            # LAYER_NAME_COLLISIONS: {
-            #     "use_spatial_hash": True
-            # },
+            LAYER_NAME_COLLISIONS: {
+                "use_spatial_hash": True
+            }
         }
         self.tile_map = arcade.TileMap("assets/maps/testMap.json", TILE_SCALING, layer_options)
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
@@ -48,11 +51,13 @@ class Garoa(arcade.Window):
         self.player_sprite.center_y = PLAYER_START_Y
         self.scene.add_sprite("Player", self.player_sprite)
 
+        self.map_height = self.tile_map.height * GRID_PIXEL_SIZE
+
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
 
-        self.physics_engine = arcade.PhysicsEngineSimple(
-            self.player_sprite, self.scene["Trees"]
+        self.physics_engine = arcade.PhysicsEnginePlatformer(
+            self.player_sprite, platforms=self.scene[LAYER_NAME_COLLISIONS], gravity_constant=0
         )
 
     def on_draw(self):
@@ -102,10 +107,11 @@ class Garoa(arcade.Window):
             screen_center_y = 900 - self.height / 2
         player_centered = screen_center_x, screen_center_y
 
-        self.camera.move_to(player_centered)
+        self.camera.move_to(player_centered, 0.2)
 
     def on_update(self, delta_time):
         self.physics_engine.update()
+        self.scene.update([LAYER_NAME_COLLISIONS])
         self.center_camera_to_player()
 
 
