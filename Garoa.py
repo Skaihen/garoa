@@ -13,7 +13,7 @@ CHARACTER_SCALING = TILE_SCALING * 4
 SPRITE_PIXEL_SIZE = 64
 GRID_PIXEL_SIZE = SPRITE_PIXEL_SIZE * TILE_SCALING
 
-PLAYER_MOVEMENT_SPEED = 3
+MOVEMENT_SPEED = 3
 
 PLAYER_START_X = 4
 PLAYER_START_Y = 25
@@ -38,6 +38,10 @@ class Garoa(arcade.Window):
         self.physics_engine = None
         self.camera = None
         self.gui_camera = None
+        self.left_pressed = False
+        self.right_pressed = False
+        self.up_pressed = False
+        self.down_pressed = False
 
     def setup(self):
         self.camera = arcade.Camera(self.width, self.height)
@@ -84,25 +88,46 @@ class Garoa(arcade.Window):
             18,
         )
 
+    def update_player_speed(self):
+        self.player_sprite.change_x = 0
+        self.player_sprite.change_y = 0
+
+        if self.up_pressed and not self.down_pressed:
+            self.player_sprite.change_y = MOVEMENT_SPEED
+        elif self.down_pressed and not self.up_pressed:
+            self.player_sprite.change_y = -MOVEMENT_SPEED
+        if self.left_pressed and not self.right_pressed:
+            self.player_sprite.change_x = -MOVEMENT_SPEED
+        elif self.right_pressed and not self.left_pressed:
+            self.player_sprite.change_x = MOVEMENT_SPEED
+
     def on_key_press(self, key, modifiers):
-        if key == arcade.key.UP or key == arcade.key.W:
-            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED
-        if key == arcade.key.DOWN or key == arcade.key.S:
-            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED
-        if key == arcade.key.LEFT or key == arcade.key.A:
-            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED
-        if key == arcade.key.RIGHT or key == arcade.key.D:
-            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
+        if key == arcade.key.UP and key == arcade.key.W:
+            self.up_pressed = True
+            self.update_player_speed()
+        elif key == arcade.key.DOWN and key == arcade.key.S:
+            self.down_pressed = True
+            self.update_player_speed()
+        elif key == arcade.key.LEFT and key == arcade.key.A:
+            self.left_pressed = True
+            self.update_player_speed()
+        elif key == arcade.key.RIGHT and key == arcade.key.D:
+            self.right_pressed = True
+            self.update_player_speed()
 
     def on_key_release(self, key, modifiers):
-        if key == arcade.key.UP or key == arcade.key.W:
-            self.player_sprite.change_y = 0
-        if key == arcade.key.DOWN or key == arcade.key.S:
-            self.player_sprite.change_y = 0
-        if key == arcade.key.LEFT or key == arcade.key.A:
-            self.player_sprite.change_x = 0
-        if key == arcade.key.RIGHT or key == arcade.key.D:
-            self.player_sprite.change_x = 0
+        if key == arcade.key.UP and key == arcade.key.W:
+            self.up_pressed = False
+            self.update_player_speed()
+        elif key == arcade.key.DOWN and key == arcade.key.S:
+            self.down_pressed = False
+            self.update_player_speed()
+        elif key == arcade.key.LEFT and key == arcade.key.A:
+            self.left_pressed = False
+            self.update_player_speed()
+        elif key == arcade.key.RIGHT and key == arcade.key.D:
+            self.right_pressed = False
+            self.update_player_speed()
 
     def center_camera_to_player(self):
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
