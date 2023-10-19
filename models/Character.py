@@ -4,6 +4,7 @@ from utils.utils import get_animation_dict_from_texture_list
 
 
 class Character(arcade.Sprite):
+    # TODO Convertir entrada en un dict para poder meter los personajes como json y cambiar parametros como el default self.texture a entrada tambien
     def __init__(self, name_file: str, sprite_width: int, sprite_height: int, columns: int, count: int,
                  scale: float, fpt: float):
         super().__init__(scale=scale)
