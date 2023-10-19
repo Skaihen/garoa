@@ -129,6 +129,7 @@ class Garoa(arcade.Window):
 
 def main():
     window = Garoa(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, False)
+    window.center_window()
     window.setup()
     arcade.run()
 
