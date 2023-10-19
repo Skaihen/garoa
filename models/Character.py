@@ -5,13 +5,16 @@ from utils.utils import get_animation_dict_from_texture_list
 
 class Character(arcade.Sprite):
     def __init__(self, name_file: str, sprite_width: int, sprite_height: int, columns: int, count: int,
-                 scale: float):
+                 scale: float, fpt: float):
         super().__init__(scale=scale)
 
         main_path = f"assets/sprites/{name_file}"
         self.walk_textures = arcade.load_spritesheet(main_path, sprite_width, sprite_height, columns, count)
-        self.walk_textures_dict = get_animation_dict_from_texture_list(self.walk_textures, columns, count)
+        self.walk_textures_dict = get_animation_dict_from_texture_list(self.walk_textures, columns,
+                                                                       ("down_walk", "left_walk", "right_walk",
+                                                                        "up_walk"))
         self.cur_texture = 0
+        self.fpt = fpt
         self.columns = columns
         self.character_face_direction = "down_walk_animation"
         self.texture = self.walk_textures[1]
@@ -32,7 +35,7 @@ class Character(arcade.Sprite):
             self.texture = self.walk_textures_dict[self.character_face_direction][1]
             return
 
-        self.cur_texture += 0.25
+        self.cur_texture += self.fpt
         if self.cur_texture > self.columns - 1:
             self.cur_texture = 0
         self.texture = self.walk_textures_dict[self.character_face_direction][int(self.cur_texture)]

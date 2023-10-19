@@ -58,7 +58,7 @@ class Garoa(arcade.Window):
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
         self.player_sprite = Character("player-sheet.png", 12,
-                                       18, 4, 16, CHARACTER_SCALING)
+                                       18, 4, 16, CHARACTER_SCALING, 1 / 4)
         self.player_sprite.center_x = (
                 self.tile_map.tile_width * TILE_SCALING * PLAYER_START_X
         )
