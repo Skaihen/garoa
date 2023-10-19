@@ -1,4 +1,8 @@
+import os
+
 import arcade
+
+from models.Character import Character
 
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 350
@@ -23,6 +27,9 @@ class Garoa(arcade.Window):
     def __init__(self, width, height, title, vsync):
         super().__init__(width, height, title, vsync)
 
+        file_path = os.path.dirname(os.path.abspath(__file__))
+        os.chdir(file_path)
+
         self.tile_map = None
         self.map_height = 0
         self.scene = None
@@ -30,8 +37,6 @@ class Garoa(arcade.Window):
         self.physics_engine = None
         self.camera = None
         self.gui_camera = None
-
-        arcade.set_background_color(arcade.csscolor.BLACK)
 
     def setup(self):
         self.camera = arcade.Camera(self.width, self.height)
@@ -46,7 +51,7 @@ class Garoa(arcade.Window):
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
         self.scene.add_sprite_list_after("Player", TREES_LAYER)
-        self.player_sprite = arcade.Sprite("assets/sprites/player-sheet.png", CHARACTER_SCALING)
+        self.player_sprite = Character("assets/sprites/player-sheet.png")
         self.player_sprite.center_x = PLAYER_START_X
         self.player_sprite.center_y = PLAYER_START_Y
         self.scene.add_sprite("Player", self.player_sprite)
