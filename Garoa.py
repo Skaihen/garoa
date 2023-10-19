@@ -38,10 +38,12 @@ class Garoa(arcade.Window):
         self.physics_engine = None
         self.camera = None
         self.gui_camera = None
-        self.left_pressed = False
-        self.right_pressed = False
-        self.up_pressed = False
-        self.down_pressed = False
+        self.character_walking_direct = {
+            "down": False,
+            "left": False,
+            "right": False,
+            "up": False
+        }
 
     def setup(self):
         self.camera = arcade.Camera(self.width, self.height)
@@ -92,41 +94,41 @@ class Garoa(arcade.Window):
         self.player_sprite.change_x = 0
         self.player_sprite.change_y = 0
 
-        if self.up_pressed and not self.down_pressed:
+        if self.character_walking_direct["up"] and not self.character_walking_direct["down"]:
             self.player_sprite.change_y = MOVEMENT_SPEED
-        elif self.down_pressed and not self.up_pressed:
+        elif self.character_walking_direct["down"] and not self.character_walking_direct["up"]:
             self.player_sprite.change_y = -MOVEMENT_SPEED
-        if self.left_pressed and not self.right_pressed:
+        if self.character_walking_direct["left"] and not self.character_walking_direct["right"]:
             self.player_sprite.change_x = -MOVEMENT_SPEED
-        elif self.right_pressed and not self.left_pressed:
+        elif self.character_walking_direct["right"] and not self.character_walking_direct["left"]:
             self.player_sprite.change_x = MOVEMENT_SPEED
 
     def on_key_press(self, key, modifiers):
-        if key == arcade.key.UP and key == arcade.key.W:
-            self.up_pressed = True
+        if key == arcade.key.DOWN or key == arcade.key.S:
+            self.character_walking_direct["down"] = True
             self.update_player_speed()
-        elif key == arcade.key.DOWN and key == arcade.key.S:
-            self.down_pressed = True
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            self.character_walking_direct["left"] = True
             self.update_player_speed()
-        elif key == arcade.key.LEFT and key == arcade.key.A:
-            self.left_pressed = True
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            self.character_walking_direct["right"] = True
             self.update_player_speed()
-        elif key == arcade.key.RIGHT and key == arcade.key.D:
-            self.right_pressed = True
+        elif key == arcade.key.UP or key == arcade.key.W:
+            self.character_walking_direct["up"] = True
             self.update_player_speed()
 
     def on_key_release(self, key, modifiers):
-        if key == arcade.key.UP and key == arcade.key.W:
-            self.up_pressed = False
+        if key == arcade.key.DOWN or key == arcade.key.S:
+            self.character_walking_direct["down"] = False
             self.update_player_speed()
-        elif key == arcade.key.DOWN and key == arcade.key.S:
-            self.down_pressed = False
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            self.character_walking_direct["left"] = False
             self.update_player_speed()
-        elif key == arcade.key.LEFT and key == arcade.key.A:
-            self.left_pressed = False
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            self.character_walking_direct["right"] = False
             self.update_player_speed()
-        elif key == arcade.key.RIGHT and key == arcade.key.D:
-            self.right_pressed = False
+        elif key == arcade.key.UP or key == arcade.key.W:
+            self.character_walking_direct["up"] = False
             self.update_player_speed()
 
     def center_camera_to_player(self):
