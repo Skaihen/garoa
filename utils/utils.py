@@ -12,13 +12,13 @@ def get_animation_dict_from_texture_list(texture_list: List[Texture], columns: i
         "idle": texture_list[1],
     }
     directions = "down", "left", "right", "up"
-    texture_count = 0
+    total_texture_count = 0
 
     for i in range(int(count / columns)):
-        texture_partial = []
+        texture_list_partial = []
         for _ in range(columns):
-            texture_partial.append(texture_list[texture_count])
-            texture_count += 1
-        animation_dict[f"{directions[i]}_walk_animation"] = texture_partial
+            texture_list_partial.append(texture_list[total_texture_count])
+            total_texture_count += 1
+        animation_dict[f"{directions[i]}_walk_animation"] = texture_list_partial
 
     return animation_dict
