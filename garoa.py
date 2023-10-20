@@ -99,17 +99,10 @@ class Garoa(arcade.Window):
         )
 
     def update_player_speed(self):
-        self.player_sprite.change_x = 0
-        self.player_sprite.change_y = 0
-
-        if self.character_walking_direct["up"] and not self.character_walking_direct["down"]:
-            self.player_sprite.change_y = MOVEMENT_SPEED
-        elif self.character_walking_direct["down"] and not self.character_walking_direct["up"]:
-            self.player_sprite.change_y = -MOVEMENT_SPEED
-        if self.character_walking_direct["left"] and not self.character_walking_direct["right"]:
-            self.player_sprite.change_x = -MOVEMENT_SPEED
-        elif self.character_walking_direct["right"] and not self.character_walking_direct["left"]:
-            self.player_sprite.change_x = MOVEMENT_SPEED
+        move = self.character_walking_direct["right"] - self.character_walking_direct["left"], \
+               self.character_walking_direct["up"] - self.character_walking_direct["down"]
+        self.player_sprite.change_x = move[0] * MOVEMENT_SPEED
+        self.player_sprite.change_y = move[1] * MOVEMENT_SPEED
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.DOWN or key == arcade.key.S:
