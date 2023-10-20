@@ -1,3 +1,4 @@
+import math
 import os
 
 import arcade
@@ -83,26 +84,14 @@ class Garoa(arcade.Window):
             self.player_sprite, self.scene[ITEMS_LAYER]
         )
 
-    def on_draw(self):
-        self.clear()
-        self.camera.use()
-        self.scene.draw(pixelated=True)
-        self.gui_camera.use()
-
-        score_text = f"Interfaz {self.player_sprite.change_x}, {self.player_sprite.change_y}"
-        arcade.draw_text(
-            score_text,
-            10,
-            self.height - 20,
-            arcade.csscolor.WHITE,
-            18,
-        )
-
     def update_player_speed(self):
-        move = self.character_walking_direct["right"] - self.character_walking_direct["left"], \
-               self.character_walking_direct["up"] - self.character_walking_direct["down"]
-        self.player_sprite.change_x = move[0] * MOVEMENT_SPEED
-        self.player_sprite.change_y = move[1] * MOVEMENT_SPEED
+        move_x = self.character_walking_direct["right"] - self.character_walking_direct["left"]
+        move_y = self.character_walking_direct["up"] - self.character_walking_direct["down"]
+        if move_x != 0 and move_y != 0:
+            move_x /= math.sqrt(2)
+            move_y /= math.sqrt(2)
+        self.player_sprite.change_x = move_x * MOVEMENT_SPEED
+        self.player_sprite.change_y = move_y * MOVEMENT_SPEED
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.DOWN or key == arcade.key.S:
@@ -145,6 +134,21 @@ class Garoa(arcade.Window):
         player_centered = screen_center_x, screen_center_y
 
         self.camera.move_to(player_centered, 0.2)
+
+    def on_draw(self):
+        self.clear()
+        self.camera.use()
+        self.scene.draw(pixelated=True)
+        self.gui_camera.use()
+
+        score_text = f"Velocidad {self.player_sprite.change_x},\r\n{self.player_sprite.change_y}"
+        arcade.draw_text(
+            score_text,
+            10,
+            self.height - 20,
+            arcade.csscolor.RED,
+            18,
+        )
 
     def on_update(self, delta_time):
         self.physics_engine.update()
