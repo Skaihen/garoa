@@ -2,7 +2,7 @@ import os
 
 import arcade
 
-from models.Character import Character
+from models.character import Character
 
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 350
@@ -57,8 +57,16 @@ class Garoa(arcade.Window):
         self.tile_map = arcade.TileMap("assets/maps/testMap.json", TILE_SCALING, layer_options)
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
-        self.player_sprite = Character("player-sheet.png", 12,
-                                       18, 4, 16, CHARACTER_SCALING, 1 / 4)
+        player_params = {
+            "name_file": "player-sheet.png",
+            "sprite_width": 12,
+            "sprite_height": 18,
+            "columns": 4,
+            "count": 16,
+            "scale": CHARACTER_SCALING,
+            "fpt": 1 / 8
+        }
+        self.player_sprite = Character(player_params)
         self.player_sprite.center_x = (
                 self.tile_map.tile_width * TILE_SCALING * PLAYER_START_X
         )

@@ -1,6 +1,16 @@
-from typing import List
+from typing import List, TypedDict
 
 from arcade import Texture
+
+
+class CharacterParams(TypedDict):
+    name_file: str
+    sprite_width: int
+    sprite_height: int
+    columns: int
+    count: int
+    scale: float
+    fpt: float
 
 
 def get_animation_dict_from_texture_list(texture_list: List[Texture], columns: int, directions: tuple) -> dict:
