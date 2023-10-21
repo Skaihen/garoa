@@ -12,8 +12,7 @@ class Character(arcade.Sprite):
                                                      character_params["sprite_height"], character_params["columns"],
                                                      character_params["count"])
         self.walk_textures_dict = get_animation_dict_from_texture_list(self.walk_textures, character_params["columns"],
-                                                                       ("down_walk", "left_walk", "right_walk",
-                                                                        "up_walk"))
+                                                                       character_params["directions"])
         self.cur_texture = 0
         self.fpt = character_params["fpt"]
         self.columns = character_params["columns"]

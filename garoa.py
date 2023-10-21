@@ -3,7 +3,7 @@ import os
 
 import arcade
 
-from models.character import Character
+from models.player import Player
 
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 350
@@ -26,7 +26,7 @@ ITEMS_LAYER = "Items"
 
 
 class Garoa(arcade.Window):
-    def __init__(self, width, height, title, vsync):
+    def __init__(self, width: int, height: int, title: str, vsync: bool):
         super().__init__(width, height, title, vsync)
 
         file_path = os.path.dirname(os.path.abspath(__file__))
@@ -65,9 +65,12 @@ class Garoa(arcade.Window):
             "columns": 4,
             "count": 16,
             "scale": CHARACTER_SCALING,
-            "fpt": 1 / 8
+            "speed": MOVEMENT_SPEED,
+            "fpt": 1 / 8,
+            "directions": ("down_walk", "left_walk", "right_walk",
+                           "up_walk")
         }
-        self.player_sprite = Character(player_params)
+        self.player_sprite = Player(player_params)
         self.player_sprite.center_x = (
                 self.tile_map.tile_width * TILE_SCALING * PLAYER_START_X
         )
@@ -88,8 +91,8 @@ class Garoa(arcade.Window):
         move_x = self.character_walking_direct["right"] - self.character_walking_direct["left"]
         move_y = self.character_walking_direct["up"] - self.character_walking_direct["down"]
         if move_x != 0 and move_y != 0:
-            move_x /= math.sqrt(2)
-            move_y /= math.sqrt(2)
+            move_x *= math.cos(math.pi / 4)
+            move_y *= math.sin(math.pi / 4)
         self.player_sprite.change_x = move_x * MOVEMENT_SPEED
         self.player_sprite.change_y = move_y * MOVEMENT_SPEED
 
@@ -141,7 +144,7 @@ class Garoa(arcade.Window):
         self.scene.draw(pixelated=True)
         self.gui_camera.use()
 
-        score_text = f"Velocidad {self.player_sprite.change_x},\r\n{self.player_sprite.change_y}"
+        score_text = f"Velocidad {round(self.player_sprite.change_x, 2)}, {round(self.player_sprite.change_y, 2)}"
         arcade.draw_text(
             score_text,
             10,

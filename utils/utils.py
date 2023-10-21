@@ -10,7 +10,9 @@ class CharacterParams(TypedDict):
     columns: int
     count: int
     scale: float
+    speed: float
     fpt: float
+    directions: tuple
 
 
 def get_animation_dict_from_texture_list(texture_list: List[Texture], columns: int, directions: tuple) -> dict:
