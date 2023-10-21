@@ -136,7 +136,7 @@ class Garoa(arcade.Window):
 
     def on_update(self, delta_time):
         self.physics_engine.update()
-        self.player_sprite.update_player_speed(self.character_walking_direct)
+        self.player_sprite.update_player_position(self.character_walking_direct)
         self.scene.update_animation(
             delta_time, [BACKGROUND_LAYER, PLAYER_LAYER]
         )
