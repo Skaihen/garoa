@@ -37,12 +37,6 @@ class Garoa(arcade.Window):
         self.physics_engine = None
         self.camera = None
         self.gui_camera = None
-        self.character_walking_direct = {
-            "down": False,
-            "left": False,
-            "right": False,
-            "up": False
-        }
 
     def setup(self):
         self.camera = arcade.Camera(self.width, self.height)
@@ -86,24 +80,10 @@ class Garoa(arcade.Window):
         )
 
     def on_key_press(self, key, modifiers):
-        if key == arcade.key.DOWN or key == arcade.key.S:
-            self.character_walking_direct["down"] = True
-        elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.character_walking_direct["left"] = True
-        elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.character_walking_direct["right"] = True
-        elif key == arcade.key.UP or key == arcade.key.W:
-            self.character_walking_direct["up"] = True
+        self.player_sprite.on_key_press(key, modifiers)
 
     def on_key_release(self, key, modifiers):
-        if key == arcade.key.DOWN or key == arcade.key.S:
-            self.character_walking_direct["down"] = False
-        elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.character_walking_direct["left"] = False
-        elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.character_walking_direct["right"] = False
-        elif key == arcade.key.UP or key == arcade.key.W:
-            self.character_walking_direct["up"] = False
+        self.player_sprite.on_key_release(key, modifiers)
 
     def center_camera_to_player(self):
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
@@ -136,7 +116,7 @@ class Garoa(arcade.Window):
 
     def on_update(self, delta_time):
         self.physics_engine.update()
-        self.player_sprite.update_player_position(self.character_walking_direct)
+        self.player_sprite.update_player_position()
         self.scene.update_animation(
             delta_time, [BACKGROUND_LAYER, PLAYER_LAYER]
         )
