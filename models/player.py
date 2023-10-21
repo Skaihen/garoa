@@ -3,7 +3,7 @@ import arcade
 from models.character import Character
 from utils.utils import CharacterParams
 
-DEAD_ZONE = 0.05
+DEAD_ZONE = 0.2
 
 
 class Player(Character):
@@ -14,9 +14,7 @@ class Player(Character):
 
         if joysticks:
             self.joystick = joysticks[0]
-
             self.joystick.open()
-
             self.joystick.push_handlers(self)
         else:
             print("There are no joysticks, plug in a joystick and run again.")
@@ -31,9 +29,6 @@ class Player(Character):
             self.change_y = -self.joystick.y * self.character_params["speed"]
             if abs(self.change_y) < DEAD_ZONE:
                 self.change_y = 0
-
-        self.center_x += self.change_x
-        self.center_y += self.change_y
 
     # noinspection PyMethodMayBeStatic
     def on_joybutton_press(self, _joystick, button):

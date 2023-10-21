@@ -28,7 +28,6 @@ ITEMS_LAYER = "Items"
 class Garoa(arcade.Window):
     def __init__(self, width: int, height: int, title: str, vsync: bool):
         super().__init__(width, height, title, vsync)
-
         file_path = os.path.dirname(os.path.abspath(__file__))
         os.chdir(file_path)
 
@@ -155,6 +154,7 @@ class Garoa(arcade.Window):
 
     def on_update(self, delta_time):
         self.physics_engine.update()
+        self.player_sprite.update()
         self.scene.update_animation(
             delta_time, [BACKGROUND_LAYER, PLAYER_LAYER]
         )
