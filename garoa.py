@@ -1,4 +1,3 @@
-import math
 import os
 
 import arcade
@@ -86,42 +85,25 @@ class Garoa(arcade.Window):
             self.player_sprite, self.scene[ITEMS_LAYER]
         )
 
-    def update_player_speed(self):
-        move_x = self.character_walking_direct["right"] - self.character_walking_direct["left"]
-        move_y = self.character_walking_direct["up"] - self.character_walking_direct["down"]
-        if move_x != 0 and move_y != 0:
-            move_x *= math.cos(math.pi / 4)
-            move_y *= math.sin(math.pi / 4)
-        self.player_sprite.change_x = move_x * MOVEMENT_SPEED
-        self.player_sprite.change_y = move_y * MOVEMENT_SPEED
-
     def on_key_press(self, key, modifiers):
         if key == arcade.key.DOWN or key == arcade.key.S:
             self.character_walking_direct["down"] = True
-            self.update_player_speed()
         elif key == arcade.key.LEFT or key == arcade.key.A:
             self.character_walking_direct["left"] = True
-            self.update_player_speed()
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.character_walking_direct["right"] = True
-            self.update_player_speed()
         elif key == arcade.key.UP or key == arcade.key.W:
             self.character_walking_direct["up"] = True
-            self.update_player_speed()
 
     def on_key_release(self, key, modifiers):
         if key == arcade.key.DOWN or key == arcade.key.S:
             self.character_walking_direct["down"] = False
-            self.update_player_speed()
         elif key == arcade.key.LEFT or key == arcade.key.A:
             self.character_walking_direct["left"] = False
-            self.update_player_speed()
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.character_walking_direct["right"] = False
-            self.update_player_speed()
         elif key == arcade.key.UP or key == arcade.key.W:
             self.character_walking_direct["up"] = False
-            self.update_player_speed()
 
     def center_camera_to_player(self):
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
@@ -154,7 +136,7 @@ class Garoa(arcade.Window):
 
     def on_update(self, delta_time):
         self.physics_engine.update()
-        self.player_sprite.update()
+        self.player_sprite.update_player_speed(self.character_walking_direct)
         self.scene.update_animation(
             delta_time, [BACKGROUND_LAYER, PLAYER_LAYER]
         )

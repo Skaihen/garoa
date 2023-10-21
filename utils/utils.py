@@ -3,6 +3,13 @@ from typing import List, TypedDict
 from arcade import Texture
 
 
+class CharacterWalkingDirect(TypedDict):
+    down: bool
+    left: bool
+    right: bool
+    up: bool
+
+
 class CharacterParams(TypedDict):
     name_file: str
     sprite_width: int

@@ -1,7 +1,9 @@
+import math
+
 import arcade
 
 from models.character import Character
-from utils.utils import CharacterParams
+from utils.utils import CharacterParams, CharacterWalkingDirect
 
 DEAD_ZONE = 0.2
 
@@ -20,16 +22,6 @@ class Player(Character):
             print("There are no joysticks, plug in a joystick and run again.")
             self.joystick = None
 
-    def update(self):
-        if self.joystick:
-            self.change_x = self.joystick.x * self.character_params["speed"]
-            if abs(self.change_x) < DEAD_ZONE:
-                self.change_x = 0
-
-            self.change_y = -self.joystick.y * self.character_params["speed"]
-            if abs(self.change_y) < DEAD_ZONE:
-                self.change_y = 0
-
     # noinspection PyMethodMayBeStatic
     def on_joybutton_press(self, _joystick, button):
         print("Button {} down".format(button))
@@ -41,3 +33,20 @@ class Player(Character):
     # noinspection PyMethodMayBeStatic
     def on_joyhat_motion(self, _joystick, hat_x, hat_y):
         print("Hat ({}, {})".format(hat_x, hat_y))
+
+    def update_player_speed(self, character_walking_direct: CharacterWalkingDirect):
+        if self.joystick and (abs(self.joystick.x) > DEAD_ZONE or abs(self.joystick.y) > DEAD_ZONE):
+            self.change_x = self.joystick.x * self.character_params["speed"]
+            if abs(self.change_x) < DEAD_ZONE:
+                self.change_x = 0
+            self.change_y = -self.joystick.y * self.character_params["speed"]
+            if abs(self.change_y) < DEAD_ZONE:
+                self.change_y = 0
+        else:
+            self.change_x = ((character_walking_direct["right"] - character_walking_direct["left"]) *
+                             self.character_params["speed"])
+            self.change_y = ((character_walking_direct["up"] - character_walking_direct["down"]) *
+                             self.character_params["speed"])
+            if self.change_x != 0 and self.change_y != 0:
+                self.change_x *= math.cos(math.pi / 4)
+                self.change_y *= math.sin(math.pi / 4)
