@@ -21,14 +21,14 @@ class Character(arcade.Sprite):
         self.hit_box = self.texture.hit_box_points
 
     def update_animation(self, delta_time: float = 1 / 60):
-        if self.change_x < 0:
+        if self.change_x < 0 and abs(self.change_x) >= abs(self.change_y):
             self.character_face_direction = "left_walk_animation"
-        elif self.change_x > 0:
+        elif self.change_x > 0 and abs(self.change_x) >= abs(self.change_y):
             self.character_face_direction = "right_walk_animation"
 
-        elif self.change_y < 0:
+        elif self.change_y < 0 and abs(self.change_y) > abs(self.change_x):
             self.character_face_direction = "down_walk_animation"
-        elif self.change_y > 0:
+        elif self.change_y > 0 and abs(self.change_y) > abs(self.change_x):
             self.character_face_direction = "up_walk_animation"
 
         if self.change_x == 0 and self.change_y == 0:
