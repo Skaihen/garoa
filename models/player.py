@@ -5,7 +5,7 @@ import arcade
 from models.character import Character
 from utils.utils import CharacterParams
 
-DEAD_ZONE = 0.1
+DEAD_ZONE = 0.2
 
 
 class Player(Character):
