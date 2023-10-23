@@ -7,6 +7,17 @@ from utils.utils import CharacterParams
 
 DEAD_ZONE = 0.2
 
+KEY_MAPPING = {
+    arcade.key.DOWN: "down",
+    arcade.key.S: "down",
+    arcade.key.LEFT: "left",
+    arcade.key.A: "left",
+    arcade.key.RIGHT: "right",
+    arcade.key.D: "right",
+    arcade.key.UP: "up",
+    arcade.key.W: "up"
+}
+
 
 class Player(Character):
     def __init__(self, character_params: CharacterParams):
@@ -39,35 +50,33 @@ class Player(Character):
     def on_joyhat_motion(self, _joystick, hat_x, hat_y):
         print("Hat ({}, {})".format(hat_x, hat_y))
 
+    def is_joystick_active(self):
+        return self.joystick and (abs(self.joystick.x) > DEAD_ZONE or abs(self.joystick.y) > DEAD_ZONE)
+
+    def calculate_change(self, value):
+        return value * self.character_params["speed"] if abs(value) > DEAD_ZONE else 0
+
     def update_player_position(self):
-        if self.joystick and (abs(self.joystick.x) > DEAD_ZONE or abs(self.joystick.y) > DEAD_ZONE):
-            self.change_x = self.joystick.x * self.character_params["speed"] if abs(self.joystick.x) > DEAD_ZONE else 0
-            self.change_y = -self.joystick.y * self.character_params["speed"] if abs(self.joystick.y) > DEAD_ZONE else 0
+        if self.is_joystick_active():
+            self.change_x = self.calculate_change(self.joystick.x)
+            self.change_y = self.calculate_change(-self.joystick.y)
         else:
-            self.change_x = ((self.character_walking_direct["right"] - self.character_walking_direct["left"]) *
-                             self.character_params["speed"])
-            self.change_y = ((self.character_walking_direct["up"] - self.character_walking_direct["down"]) *
-                             self.character_params["speed"])
+            self.change_x = self.calculate_change(
+                self.character_walking_direct["right"] - self.character_walking_direct["left"])
+            self.change_y = self.calculate_change(
+                self.character_walking_direct["up"] - self.character_walking_direct["down"])
+
             if self.change_x != 0 and self.change_y != 0:
-                self.change_x *= math.cos(math.pi / 4)
-                self.change_y *= math.sin(math.pi / 4)
+                angle = math.pi / 4
+                self.change_x *= math.cos(angle)
+                self.change_y *= math.sin(angle)
 
     def on_key_press(self, key, modifiers):
-        if key == arcade.key.DOWN or key == arcade.key.S:
-            self.character_walking_direct["down"] = True
-        elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.character_walking_direct["left"] = True
-        elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.character_walking_direct["right"] = True
-        elif key == arcade.key.UP or key == arcade.key.W:
-            self.character_walking_direct["up"] = True
+        direction = KEY_MAPPING.get(key)
+        if direction:
+            self.character_walking_direct[direction] = True
 
     def on_key_release(self, key, modifiers):
-        if key == arcade.key.DOWN or key == arcade.key.S:
-            self.character_walking_direct["down"] = False
-        elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.character_walking_direct["left"] = False
-        elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.character_walking_direct["right"] = False
-        elif key == arcade.key.UP or key == arcade.key.W:
-            self.character_walking_direct["up"] = False
+        direction = KEY_MAPPING.get(key)
+        if direction:
+            self.character_walking_direct[direction] = False
