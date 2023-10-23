@@ -1,12 +1,6 @@
-import os
-
 import arcade
 
 from models.player import Player
-
-SCREEN_WIDTH = 400
-SCREEN_HEIGHT = 350
-SCREEN_TITLE = "Garoa"
 
 TILE_SCALING = 0.5
 CHARACTER_SCALING = TILE_SCALING * 4
@@ -22,20 +16,6 @@ PLAYER_LAYER = "Player"
 BACKGROUND_LAYER = "Background"
 TREES_LAYER = "Trees"
 ITEMS_LAYER = "Items"
-
-
-class TitleScreenView(arcade.View):
-    def on_show_view(self):
-        arcade.set_background_color(arcade.color.BLACK)
-
-    def on_draw(self):
-        self.clear()
-        arcade.draw_text("Menu Screen - click to advance", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, anchor_x="center")
-
-    def on_mouse_press(self, _x, _y, _button, _modifiers):
-        game_view = GameView()
-        game_view.setup()
-        self.window.show_view(game_view)
 
 
 class GameView(arcade.View):
@@ -134,17 +114,3 @@ class GameView(arcade.View):
         )
         # self.scene.update([ITEMS_LAYER])
         self.center_camera_to_player()
-
-
-def main():
-    file_path = os.path.dirname(os.path.abspath(__file__))
-    os.chdir(file_path)
-    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, vsync=False)
-    window.center_window()
-    title_screen_view = TitleScreenView()
-    window.show_view(title_screen_view)
-    arcade.run()
-
-
-if __name__ == "__main__":
-    main()
