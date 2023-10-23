@@ -24,11 +24,23 @@ TREES_LAYER = "Trees"
 ITEMS_LAYER = "Items"
 
 
-class Garoa(arcade.Window):
-    def __init__(self, width: int, height: int, title: str, vsync: bool):
-        super().__init__(width, height, title, vsync)
-        file_path = os.path.dirname(os.path.abspath(__file__))
-        os.chdir(file_path)
+class TitleScreenView(arcade.View):
+    def on_show_view(self):
+        arcade.set_background_color(arcade.color.BLACK)
+
+    def on_draw(self):
+        self.clear()
+        arcade.draw_text("Menu Screen - click to advance", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, anchor_x="center")
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        game_view = GameView()
+        game_view.setup()
+        self.window.show_view(game_view)
+
+
+class GameView(arcade.View):
+    def __init__(self):
+        super().__init__()
 
         self.tile_map = None
         self.map_height = 0
@@ -39,8 +51,8 @@ class Garoa(arcade.Window):
         self.gui_camera = None
 
     def setup(self):
-        self.camera = arcade.Camera(self.width, self.height)
-        self.gui_camera = arcade.Camera(self.width, self.height)
+        self.camera = arcade.Camera(self.window.width, self.window.height)
+        self.gui_camera = arcade.Camera(self.window.width, self.window.height)
 
         layer_options = {
             ITEMS_LAYER: {
@@ -93,8 +105,8 @@ class Garoa(arcade.Window):
             screen_center_x = 0
         if screen_center_y < 0:
             screen_center_y = 0
-        if (screen_center_y + self.height / 2) > 900:
-            screen_center_y = 900 - self.height / 2
+        if (screen_center_y + self.window.height / 2) > 900:
+            screen_center_y = 900 - self.window.height / 2
         player_centered = screen_center_x, screen_center_y
 
         self.camera.move_to(player_centered, 0.2)
@@ -109,7 +121,7 @@ class Garoa(arcade.Window):
         arcade.draw_text(
             score_text,
             10,
-            self.height - 20,
+            self.window.height - 20,
             arcade.csscolor.RED,
             18,
         )
@@ -125,9 +137,12 @@ class Garoa(arcade.Window):
 
 
 def main():
-    window = Garoa(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, False)
+    file_path = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(file_path)
+    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, vsync=False)
     window.center_window()
-    window.setup()
+    title_screen_view = TitleScreenView()
+    window.show_view(title_screen_view)
     arcade.run()
 
 
