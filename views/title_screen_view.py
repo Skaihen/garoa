@@ -2,9 +2,6 @@ import arcade
 
 from views.game_view import GameView
 
-SCREEN_WIDTH = 400
-SCREEN_HEIGHT = 350
-
 
 class TitleScreenView(arcade.View):
     def on_show_view(self):

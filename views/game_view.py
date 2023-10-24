@@ -2,21 +2,6 @@ import arcade
 
 from models.player import Player
 
-TILE_SCALING = 0.5
-CHARACTER_SCALING = TILE_SCALING * 4
-SPRITE_PIXEL_SIZE = 64
-GRID_PIXEL_SIZE = SPRITE_PIXEL_SIZE * TILE_SCALING
-
-MOVEMENT_SPEED = 3
-
-PLAYER_START_X = 4
-PLAYER_START_Y = 25
-
-PLAYER_LAYER = "Player"
-BACKGROUND_LAYER = "Background"
-TREES_LAYER = "Trees"
-ITEMS_LAYER = "Items"
-
 
 class GameView(arcade.View):
     def __init__(self):

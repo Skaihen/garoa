@@ -4,10 +4,6 @@ import arcade
 
 from views.title_screen_view import TitleScreenView
 
-SCREEN_WIDTH = 400
-SCREEN_HEIGHT = 350
-SCREEN_TITLE = "Garoa"
-
 
 def main():
     file_path = os.path.dirname(os.path.abspath(__file__))

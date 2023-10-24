@@ -5,19 +5,6 @@ import arcade
 from models.character import Character
 from utils.utils import CharacterParams
 
-DEAD_ZONE = 0.2
-
-KEY_MAPPING = {
-    arcade.key.DOWN: "down",
-    arcade.key.S: "down",
-    arcade.key.LEFT: "left",
-    arcade.key.A: "left",
-    arcade.key.RIGHT: "right",
-    arcade.key.D: "right",
-    arcade.key.UP: "up",
-    arcade.key.W: "up"
-}
-
 
 class Player(Character):
     def __init__(self, character_params: CharacterParams):
