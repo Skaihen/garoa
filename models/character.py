@@ -1,6 +1,6 @@
 import arcade
 
-from utils.utils import get_animation_dict_from_texture_list, CharacterParams
+from utils import get_animation_dict_from_texture_list, CharacterParams
 
 
 class Character(arcade.Sprite):

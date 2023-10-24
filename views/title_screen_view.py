@@ -1,10 +1,7 @@
 import arcade
-import yaml
 
-from views.game_view import GameView
-
-with open("config/config.yml", "r") as file:
-    config_service = yaml.safe_load(file)
+from config import SCREEN_WIDTH, SCREEN_HEIGHT
+from views import GameView
 
 
 class TitleScreenView(arcade.View):
@@ -13,8 +10,8 @@ class TitleScreenView(arcade.View):
 
     def on_draw(self):
         self.clear()
-        arcade.draw_text("Menu Screen - click to advance", config_service["SCREEN_WIDTH"] / 2,
-                         config_service["SCREEN_HEIGHT"] / 2, anchor_x="center")
+        arcade.draw_text("Menu Screen - click to advance", SCREEN_WIDTH / 2,
+                         SCREEN_HEIGHT / 2, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         game_view = GameView()
