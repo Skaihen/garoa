@@ -1,6 +1,10 @@
 import arcade
+import yaml
 
 from models.player import Player
+
+with open("config/config.yml", "r") as file:
+    config_service = yaml.safe_load(file)
 
 
 class GameView(arcade.View):
@@ -20,11 +24,11 @@ class GameView(arcade.View):
         self.gui_camera = arcade.Camera(self.window.width, self.window.height)
 
         layer_options = {
-            ITEMS_LAYER: {
+            config_service["ITEMS_LAYER"]: {
                 "use_spatial_hash": True
             }
         }
-        self.tile_map = arcade.TileMap("assets/maps/testMap.json", TILE_SCALING, layer_options)
+        self.tile_map = arcade.TileMap("assets/maps/testMap.json", config_service["TILE_SCALING"], layer_options)
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
         player_params = {
@@ -33,27 +37,27 @@ class GameView(arcade.View):
             "sprite_height": 18,
             "columns": 4,
             "count": 16,
-            "scale": CHARACTER_SCALING,
-            "speed": MOVEMENT_SPEED,
+            "scale": config_service["CHARACTER_SCALING"],
+            "speed": config_service["MOVEMENT_SPEED"],
             "fpt": 1 / 8,
             "directions": ("down_walk", "left_walk", "right_walk",
                            "up_walk")
         }
         self.player_sprite = Player(player_params)
         self.player_sprite.center_x = (
-                self.tile_map.tile_width * TILE_SCALING * PLAYER_START_X
+                self.tile_map.tile_width * config_service["TILE_SCALING"] * config_service["PLAYER_START_X"]
         )
         self.player_sprite.center_y = (
-                self.tile_map.tile_height * TILE_SCALING * PLAYER_START_Y
+                self.tile_map.tile_height * config_service["TILE_SCALING"] * config_service["PLAYER_START_Y"]
         )
-        self.scene.add_sprite(PLAYER_LAYER, self.player_sprite)
+        self.scene.add_sprite(config_service["PLAYER_LAYER"], self.player_sprite)
 
-        self.map_height = self.tile_map.height * GRID_PIXEL_SIZE
+        self.map_height = self.tile_map.height * config_service["GRID_PIXEL_SIZE"]
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
 
         self.physics_engine = arcade.PhysicsEngineSimple(
-            self.player_sprite, self.scene[ITEMS_LAYER]
+            self.player_sprite, self.scene[config_service["ITEMS_LAYER"]]
         )
 
     def on_key_press(self, key, modifiers):
@@ -95,7 +99,7 @@ class GameView(arcade.View):
         self.physics_engine.update()
         self.player_sprite.update_player_position()
         self.scene.update_animation(
-            delta_time, [BACKGROUND_LAYER, PLAYER_LAYER]
+            delta_time, [config_service["BACKGROUND_LAYER"], config_service["PLAYER_LAYER"]]
         )
         # self.scene.update([ITEMS_LAYER])
         self.center_camera_to_player()

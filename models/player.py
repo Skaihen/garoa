@@ -1,9 +1,13 @@
 import math
 
 import arcade
+import yaml
 
 from models.character import Character
 from utils.utils import CharacterParams
+
+with open("config/config.yml", "r") as file:
+    config_service = yaml.safe_load(file)
 
 
 class Player(Character):
@@ -38,10 +42,12 @@ class Player(Character):
         print("Hat ({}, {})".format(hat_x, hat_y))
 
     def is_joystick_active(self):
-        return self.joystick and (abs(self.joystick.x) > DEAD_ZONE or abs(self.joystick.y) > DEAD_ZONE)
+        return self.joystick and (
+                abs(self.joystick.x) > config_service["DEAD_ZONE"] or abs(self.joystick.y) > config_service[
+            "DEAD_ZONE"])
 
     def calculate_change(self, value):
-        return value * self.character_params["speed"] if abs(value) > DEAD_ZONE else 0
+        return value * self.character_params["speed"] if abs(value) > config_service["DEAD_ZONE"] else 0
 
     def update_player_position(self):
         if self.is_joystick_active():
@@ -59,11 +65,11 @@ class Player(Character):
                 self.change_y *= math.sin(angle)
 
     def on_key_press(self, key, modifiers):
-        direction = KEY_MAPPING.get(key)
+        direction = config_service["KEY_MAPPING"].get(key)
         if direction:
             self.character_walking_direct[direction] = True
 
     def on_key_release(self, key, modifiers):
-        direction = KEY_MAPPING.get(key)
+        direction = config_service["KEY_MAPPING"].get(key)
         if direction:
             self.character_walking_direct[direction] = False
