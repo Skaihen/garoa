@@ -1,6 +1,9 @@
 from typing import List, TypedDict
 
+import arcade
 from arcade import Texture
+
+from config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 class CharacterParams(TypedDict):
@@ -13,6 +16,20 @@ class CharacterParams(TypedDict):
     speed: float
     fpt: float
     directions: tuple
+
+
+class CharacterStats(TypedDict):
+    player_health: int
+
+
+def is_sprite_off_screen(sprite: arcade.Sprite, screen_height: int = SCREEN_HEIGHT,
+                         screen_width: int = SCREEN_WIDTH) -> bool:
+    return (
+            sprite.top < 0
+            or sprite.bottom > screen_height
+            or sprite.right < 0
+            or sprite.left > screen_width
+    )
 
 
 def get_animation_dict_from_texture_list(texture_list: List[Texture], columns: int, directions: tuple) -> dict:

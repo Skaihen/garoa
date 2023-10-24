@@ -1,10 +1,10 @@
 import arcade
 
-from utils import get_animation_dict_from_texture_list, CharacterParams
+from utils import get_animation_dict_from_texture_list, CharacterParams, CharacterStats
 
 
 class Character(arcade.Sprite):
-    def __init__(self, character_params: CharacterParams):
+    def __init__(self, character_params: CharacterParams, character_stats: CharacterStats):
         super().__init__(scale=character_params["scale"])
 
         main_path = f"assets/sprites/{character_params['name_file']}"
