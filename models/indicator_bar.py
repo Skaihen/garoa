@@ -1,7 +1,14 @@
+from typing import Tuple
+
+import arcade
+
+from models import Character
+
+
 class IndicatorBar:
     def __init__(
             self,
-            owner: Player,
+            owner: Character,
             sprite_list: arcade.SpriteList,
             position: Tuple[float, float] = (0, 0),
             full_color: arcade.Color = arcade.color.GREEN,
@@ -10,7 +17,7 @@ class IndicatorBar:
             height: int = 4,
             border_size: int = 4,
     ) -> None:
-        self.owner: Player = owner
+        self.owner: Character = owner
         self.sprite_list: arcade.SpriteList = sprite_list
 
         self._box_width: int = width
@@ -59,7 +66,7 @@ class IndicatorBar:
             )
 
         self._fullness = new_fullness
-        if new_fullness == 0.0:
+        if new_fullness == 0:
             self.full_box.visible = False
         else:
             self.full_box.visible = True
