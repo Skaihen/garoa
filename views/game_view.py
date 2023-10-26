@@ -6,7 +6,7 @@ from models import Player
 
 
 class GameView(arcade.View):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         self.tile_map = None
@@ -17,7 +17,7 @@ class GameView(arcade.View):
         self.camera = None
         self.gui_camera = None
 
-    def setup(self):
+    def setup(self) -> None:
         self.camera = arcade.Camera(self.window.width, self.window.height)
         self.gui_camera = arcade.Camera(self.window.width, self.window.height)
 
@@ -58,13 +58,13 @@ class GameView(arcade.View):
             self.player_sprite, self.scene[ITEMS_LAYER]
         )
 
-    def on_key_press(self, key, modifiers):
+    def on_key_press(self, key, modifiers) -> None:
         self.player_sprite.on_key_press(key, modifiers)
 
-    def on_key_release(self, key, modifiers):
+    def on_key_release(self, key, modifiers) -> None:
         self.player_sprite.on_key_release(key, modifiers)
 
-    def center_camera_to_player(self):
+    def center_camera_to_player(self) -> None:
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
         screen_center_y = self.player_sprite.center_y - (self.camera.viewport_height / 2)
 
@@ -78,7 +78,7 @@ class GameView(arcade.View):
 
         self.camera.move_to(player_centered, 0.2)
 
-    def on_draw(self):
+    def on_draw(self) -> None:
         self.clear()
         self.camera.use()
         self.scene.draw(pixelated=True)
@@ -93,7 +93,7 @@ class GameView(arcade.View):
             18,
         )
 
-    def on_update(self, delta_time):
+    def on_update(self, delta_time) -> None:
         self.physics_engine.update()
         self.player_sprite.update_player_position()
         self.scene.update_animation(

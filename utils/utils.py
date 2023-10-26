@@ -1,7 +1,6 @@
-from typing import List, TypedDict
+from typing import TypedDict
 
 import arcade
-from arcade import Texture
 
 from config import SCREEN_HEIGHT, SCREEN_WIDTH
 
@@ -32,7 +31,8 @@ def is_sprite_off_screen(sprite: arcade.Sprite, screen_height: int = SCREEN_HEIG
     )
 
 
-def get_animation_dict_from_texture_list(texture_list: List[Texture], columns: int, directions: tuple) -> dict:
+def get_animation_dict_from_texture_list(texture_list: list[arcade.Texture], columns: int, directions: tuple) -> \
+        dict[str, list[arcade.Texture]]:
     animation_dict = {}
     total_texture_count = 0
 

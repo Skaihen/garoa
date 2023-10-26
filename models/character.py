@@ -13,14 +13,14 @@ class Character(arcade.Sprite):
                                                      character_params["count"])
         self.walk_textures_dict = get_animation_dict_from_texture_list(self.walk_textures, character_params["columns"],
                                                                        character_params["directions"])
-        self.cur_texture = 0
+        self.cur_texture = 0.0
         self.fpt = character_params["fpt"]
         self.columns = character_params["columns"]
         self.character_face_direction = "down_walk_animation"
         self.texture = self.walk_textures[1]
         self.hit_box = self.texture.hit_box_points
 
-    def update_animation(self, delta_time: float = 1 / 60):
+    def update_animation(self, delta_time: float = 1 / 60) -> None:
         if self.change_x == 0 and self.change_y == 0:
             self.texture = self.walk_textures_dict[self.character_face_direction][1]
             return
