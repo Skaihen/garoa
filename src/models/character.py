@@ -8,7 +8,7 @@ class Character(arcade.Sprite):
     def __init__(self, character_params: CharacterParams, character_stats: CharacterStats) -> None:
         super().__init__(scale=character_params["scale"])
 
-        main_path = f"assets/sprites/{character_params['name_file']}"
+        main_path = f"../assets/sprites/{character_params['name_file']}"
         self.walk_textures = arcade.load_spritesheet(main_path, character_params["sprite_width"],
                                                      character_params["sprite_height"], character_params["columns"],
                                                      character_params["count"])

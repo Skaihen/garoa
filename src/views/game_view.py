@@ -32,7 +32,7 @@ class GameView(arcade.View):
                 "use_spatial_hash": True
             }
         }
-        self.tile_map = arcade.TileMap("assets/maps/testMap.json", TILE_SCALING, layer_options)
+        self.tile_map = arcade.TileMap("../assets/maps/testMap.json", TILE_SCALING, layer_options)
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
         self.player_sprite = Player(PLAYER_PARAMS, PLAYER_STATS)
