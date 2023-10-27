@@ -2,14 +2,14 @@ import math
 
 import arcade
 
-from config import KEY_MAPPING, DEAD_ZONE
+from config import KEY_MAPPING, DEAD_ZONE, INDICATOR_BAR_OFFSET
 from models import Character
-from utils import CharacterParams
+from utils import CharacterParams, CharacterStats
 
 
 class Player(Character):
-    def __init__(self, character_params: CharacterParams):
-        super().__init__(character_params)
+    def __init__(self, character_params: CharacterParams, character_stats: CharacterStats):
+        super().__init__(character_params, character_stats)
         self.character_params = character_params
         joysticks = arcade.get_joysticks()
         self.character_walking_direct = {
@@ -58,6 +58,10 @@ class Player(Character):
                 angle = math.pi / 4
                 self.change_x *= math.cos(angle)
                 self.change_y *= math.sin(angle)
+        self.indicator_bar.position = (
+            self.change_x,
+            self.change_y + INDICATOR_BAR_OFFSET,
+        )
 
     def on_key_press(self, key, modifiers):
         direction = KEY_MAPPING.get(key)

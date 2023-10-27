@@ -1,7 +1,7 @@
 import arcade
 
-from config import ITEMS_LAYER, TILE_SCALING, CHARACTER_SCALING, MOVEMENT_SPEED, PLAYER_START_X, PLAYER_START_Y, \
-    PLAYER_LAYER, GRID_PIXEL_SIZE, BACKGROUND_LAYER
+from config import ITEMS_LAYER, TILE_SCALING, PLAYER_START_X, PLAYER_START_Y, \
+    PLAYER_LAYER, GRID_PIXEL_SIZE, PLAYER_PARAMS, PLAYER_STATS, BLOCKS_LAYER, FOREGROUND_LAYER
 from models import Player
 
 
@@ -24,24 +24,18 @@ class GameView(arcade.View):
         layer_options = {
             ITEMS_LAYER: {
                 "use_spatial_hash": True
+            },
+            BLOCKS_LAYER: {
+                "use_spatial_hash": True
+            },
+            FOREGROUND_LAYER: {
+                "use_spatial_hash": True
             }
         }
         self.tile_map = arcade.TileMap("assets/maps/testMap.json", TILE_SCALING, layer_options)
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
-        player_params = {
-            "name_file": "player-sheet.png",
-            "sprite_width": 12,
-            "sprite_height": 18,
-            "columns": 4,
-            "count": 16,
-            "scale": CHARACTER_SCALING,
-            "speed": MOVEMENT_SPEED,
-            "fpt": 1 / 8,
-            "directions": ("down_walk", "left_walk", "right_walk",
-                           "up_walk")
-        }
-        self.player_sprite = Player(player_params)
+        self.player_sprite = Player(PLAYER_PARAMS, PLAYER_STATS)
         self.player_sprite.center_x = (
                 self.tile_map.tile_width * TILE_SCALING * PLAYER_START_X
         )
@@ -49,13 +43,14 @@ class GameView(arcade.View):
                 self.tile_map.tile_height * TILE_SCALING * PLAYER_START_Y
         )
         self.scene.add_sprite(PLAYER_LAYER, self.player_sprite)
+        self.scene.add_sprite_list(ITEMS_LAYER, PLAYER_STATS["health_bar_list"])
 
         self.map_height = self.tile_map.height * GRID_PIXEL_SIZE
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
 
         self.physics_engine = arcade.PhysicsEngineSimple(
-            self.player_sprite, self.scene[ITEMS_LAYER]
+            self.player_sprite, self.scene[BLOCKS_LAYER]
         )
 
     def on_key_press(self, key, modifiers) -> None:
@@ -97,7 +92,6 @@ class GameView(arcade.View):
         self.physics_engine.update()
         self.player_sprite.update_player_position()
         self.scene.update_animation(
-            delta_time, [BACKGROUND_LAYER, PLAYER_LAYER]
+            delta_time, [ITEMS_LAYER, PLAYER_LAYER]
         )
-        # self.scene.update([ITEMS_LAYER])
         self.center_camera_to_player()

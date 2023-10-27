@@ -1,5 +1,6 @@
 import arcade
 
+from models.indicator_bar import IndicatorBar
 from utils import get_animation_dict_from_texture_list, CharacterParams, CharacterStats
 
 
@@ -19,6 +20,10 @@ class Character(arcade.Sprite):
         self.character_face_direction = "down_walk_animation"
         self.texture = self.walk_textures[1]
         self.hit_box = self.texture.hit_box_points
+        self.indicator_bar = IndicatorBar(
+            character_stats["health_bar_list"], (self.center_x, self.center_y)
+        )
+        self.health = character_stats["health"]
 
     def update_animation(self, delta_time: float = 1 / 60) -> None:
         if self.change_x == 0 and self.change_y == 0:

@@ -17,8 +17,10 @@ PLAYER_START_X: int = 4
 PLAYER_START_Y: int = 25
 
 PLAYER_LAYER: str = "Player"
+CHARACTERS_LAYER: str = "Characters"
 BACKGROUND_LAYER: str = "Background"
-TREES_LAYER: str = "Trees"
+FOREGROUND_LAYER: str = "Foreground"
+BLOCKS_LAYER: str = "Blocks"
 ITEMS_LAYER: str = "Items"
 
 DEAD_ZONE: float = 0.2

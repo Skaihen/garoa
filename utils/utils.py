@@ -18,7 +18,8 @@ class CharacterParams(TypedDict):
 
 
 class CharacterStats(TypedDict):
-    player_health: int
+    health_bar_list: arcade.SpriteList
+    health: int
 
 
 def is_sprite_off_screen(sprite: arcade.Sprite, screen_height: int = SCREEN_HEIGHT,
