@@ -1,7 +1,7 @@
 import arcade
 
-from models.indicator_bar import IndicatorBar
-from utils import get_animation_dict_from_texture_list, CharacterParams, CharacterStats
+from src.models.indicator_bar import IndicatorBar
+from src.utils import get_animation_dict_from_texture_list, CharacterParams, CharacterStats
 
 
 class Character(arcade.Sprite):

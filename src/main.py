@@ -2,8 +2,8 @@ import os
 
 import arcade
 
-from config import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
-from views import TitleScreenView
+from src.config import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
+from src.views import TitleScreenView
 
 
 def main() -> None:

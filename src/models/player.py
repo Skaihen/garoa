@@ -2,9 +2,9 @@ import math
 
 import arcade
 
-from config import KEY_MAPPING, DEAD_ZONE, INDICATOR_BAR_OFFSET
-from models import Character
-from utils import CharacterParams, CharacterStats
+from src.config import KEY_MAPPING, DEAD_ZONE, INDICATOR_BAR_OFFSET
+from src.models import Character
+from src.utils import CharacterParams, CharacterStats
 
 
 class Player(Character):
