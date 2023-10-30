@@ -10,20 +10,20 @@ class IndicatorBar(arcade.Sprite):
         super().__init__()
         self.sprite_list = sprite_list
 
-        self.box_width = width
-        self.box_height = height
-        self.center_x = 0.0
-        self.center_y = 0.0
-        self.fullness = 5
+        self._box_width = width
+        self._box_height = height
+        self._center_x = 0.0
+        self._center_y = 0.0
+        self._fullness = 5
 
         self._background_box = arcade.SpriteSolidColor(
-            self.box_width + border_size,
-            self.box_height + border_size,
+            self._box_width + border_size,
+            self._box_height + border_size,
             background_color,
         )
         self._full_box = arcade.SpriteSolidColor(
-            self.box_width,
-            self.box_height,
+            self._box_width,
+            self._box_height,
             full_color,
         )
         self.sprite_list.append(self._background_box)
@@ -44,9 +44,9 @@ class IndicatorBar(arcade.Sprite):
 
     @fullness.setter
     def fullness(self, new_fullness: float) -> None:
-        if not (0.0 <= new_fullness <= self.fullness):
+        if not (0.0 <= new_fullness <= self._fullness):
             raise ValueError(
-                f"Got {new_fullness}, but fullness must be between 0.0 and {self.fullness}."
+                f"Got {new_fullness}, but fullness must be between 0.0 and {self._fullness}."
             )
 
         self._fullness = new_fullness
@@ -54,8 +54,8 @@ class IndicatorBar(arcade.Sprite):
             self.full_box.visible = False
         else:
             self.full_box.visible = True
-            self.full_box.width = self.box_width * new_fullness
-            self.full_box.left = self._center_x - (self.box_width // 2)
+            self.full_box.width = self._box_width * new_fullness
+            self.full_box.left = self._center_x - (self._box_width // 2)
 
     @property
     def position(self) -> Tuple[float, float]:
@@ -68,4 +68,4 @@ class IndicatorBar(arcade.Sprite):
             self.background_box.position = new_position
             self.full_box.position = new_position
 
-            self.full_box.left = self._center_x - (self.box_width // 2)
+            self.full_box.left = self._center_x - (self._box_width // 2)
