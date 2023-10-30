@@ -2,9 +2,9 @@ import math
 
 import arcade
 
-from src.config import KEY_MAPPING, DEAD_ZONE, INDICATOR_BAR_OFFSET
-from src.models import Character
-from src.utils import CharacterParams, CharacterStats
+from garoa.config import KEY_MAPPING, DEAD_ZONE, INDICATOR_BAR_OFFSET
+from garoa.models import Character
+from garoa.utils import CharacterParams, CharacterStats
 
 
 class Player(Character):

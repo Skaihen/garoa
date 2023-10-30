@@ -1,8 +1,8 @@
 import arcade
 
-from src.config import ITEMS_LAYER, TILE_SCALING, PLAYER_START_X, PLAYER_START_Y, \
+from garoa.config import ITEMS_LAYER, TILE_SCALING, PLAYER_START_X, PLAYER_START_Y, \
     PLAYER_LAYER, GRID_PIXEL_SIZE, PLAYER_PARAMS, PLAYER_STATS, BLOCKS_LAYER, FOREGROUND_LAYER
-from src.models import Player
+from garoa.models import Player
 
 
 class GameView(arcade.View):

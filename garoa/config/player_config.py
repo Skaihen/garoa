@@ -1,6 +1,6 @@
 import arcade
 
-from src.config import CHARACTER_SCALING, MOVEMENT_SPEED
+from garoa.config import CHARACTER_SCALING, MOVEMENT_SPEED
 
 PLAYER_PARAMS = {
     "name_file": "player-sheet.png",

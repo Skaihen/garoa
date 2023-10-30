@@ -1,7 +1,7 @@
 import arcade
 
-from src.config import SCREEN_WIDTH, SCREEN_HEIGHT
-from src.views import GameView
+from garoa.config import SCREEN_WIDTH, SCREEN_HEIGHT
+from garoa.views import GameView
 
 
 class TitleScreenView(arcade.View):

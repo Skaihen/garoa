@@ -2,8 +2,8 @@ import os
 
 import arcade
 
-from src.config import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
-from src.views import TitleScreenView
+from garoa.config import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
+from garoa.views import TitleScreenView
 
 
 def main() -> None:
