@@ -2,7 +2,7 @@ from typing import TypedDict
 
 import arcade
 
-from garoa.config import SCREEN_HEIGHT, SCREEN_WIDTH
+from garoa.config.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 class CharacterParams(TypedDict):
