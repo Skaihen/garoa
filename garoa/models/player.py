@@ -2,7 +2,7 @@ import math
 
 import arcade
 
-from garoa.config import KEY_MAPPING, DEAD_ZONE, INDICATOR_BAR_OFFSET
+from garoa.config import KEY_MAPPING, DEAD_ZONE
 from garoa.models import Character
 from garoa.utils import CharacterParams, CharacterStats
 
