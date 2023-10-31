@@ -58,10 +58,6 @@ class Player(Character):
                 angle = math.pi / 4
                 self.change_x *= math.cos(angle)
                 self.change_y *= math.sin(angle)
-        self.indicator_bar.position = (
-            self.change_x,
-            self.change_y + INDICATOR_BAR_OFFSET,
-        )
 
     def on_key_press(self, key, modifiers):
         direction = KEY_MAPPING.get(key)
