@@ -1,6 +1,7 @@
 import arcade
 
-from garoa.config.config import CHARACTER_SCALING, MOVEMENT_SPEED
+from garoa.config import CHARACTER_SCALING, MOVEMENT_SPEED
+from garoa.models import HealthBar
 
 PLAYER_PARAMS = {
     "name_file": "player-sheet.png",
@@ -16,6 +17,5 @@ PLAYER_PARAMS = {
 }
 
 PLAYER_STATS = {
-    "health_bar_list": arcade.SpriteList(),
     "health": 5
 }

@@ -1,7 +1,6 @@
 import arcade
 
-from garoa.models.indicator_bar import IndicatorBar
-from garoa.utils.utils import get_animation_dict_from_texture_list, CharacterParams, CharacterStats
+from garoa.utils import get_animation_dict_from_texture_list, CharacterParams, CharacterStats
 
 
 class Character(arcade.Sprite):
