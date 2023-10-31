@@ -91,6 +91,6 @@ class GameView(arcade.View):
         self.physics_engine.update()
         self.player_sprite.update_player_position()
         self.scene.update_animation(
-            delta_time, [ITEMS_LAYER, PLAYER_LAYER]
+            delta_time, [PLAYER_LAYER]
         )
         self.center_camera_to_player()

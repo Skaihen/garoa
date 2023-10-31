@@ -1,3 +1,3 @@
-from character import *
-from player import *
-from health_bar import *
+from garoa.models.character import *
+from garoa.models.player import *
+from garoa.models.health_bar import *

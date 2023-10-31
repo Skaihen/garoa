@@ -1,2 +1,2 @@
-from config import *
-from player_config import *
+from garoa.config.config import *
+from garoa.config.player_config import *
