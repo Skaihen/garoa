@@ -29,5 +29,4 @@ class HealthBar(arcade.Sprite):
         self.sprite_list.append(self.full_box)
 
     def update_bar_on_dmg(self):
-        
 
