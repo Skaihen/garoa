@@ -2,7 +2,7 @@ import os
 
 import arcade
 
-from garoa.config.config import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
+from garoa.config import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
 from garoa.views.title_screen_view import TitleScreenView
 
 
@@ -10,7 +10,6 @@ def main() -> None:
     file_path = os.path.dirname(os.path.abspath(__file__))
     os.chdir(file_path)
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT,
-
                            SCREEN_TITLE, vsync=False)
     window.center_window()
     title_screen_view = TitleScreenView()
