@@ -1,2 +1,2 @@
 all:
-	g++ main.cpp -o Garoa -Wall -Wno-missing-braces -I src/include/ -L src/lib/ -lmingw32 -lSDL2main -lSDL2
+	g++ *.cpp -o Garoa -Wall -m64 -I src/include/ -L src/lib/ -lmingw32 -lSDL2main -lSDL2
