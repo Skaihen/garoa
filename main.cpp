@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
         SDL_Quit();
         return 1;
     }
- 
+
     // Variable para controlar el bucle principal
     bool running = true;
     SDL_Event event;
