@@ -10,3 +10,5 @@
 src/Game.cpp,e\3\e379c51c672695e0796de99141e1f68ad5520ef4
 <
 src/Game.hpp,a\7\a74284ca418d7ce716d54d8148bef0b61b207f8a
+7
+LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
