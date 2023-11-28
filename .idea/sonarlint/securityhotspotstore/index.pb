@@ -12,3 +12,7 @@
 src/Game.hpp,a\7\a74284ca418d7ce716d54d8148bef0b61b207f8a
 7
 LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
+>
+.gitattributes,2\4\24139dae656713ba861751fb2c2ac38839349a7a
+M
+src/include/SDL2/close_code.h,e\5\e544630e6185505bcb3ccc296446438b6e475e69

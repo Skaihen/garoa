@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
         600,
         SDL_WINDOW_SHOWN
     );
- 
+
     if (window == nullptr) {
         std::cerr << "Error al crear la ventana: " << SDL_GetError() << std::endl;
         SDL_Quit();
